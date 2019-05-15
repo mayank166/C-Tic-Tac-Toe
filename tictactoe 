@@ -1,0 +1,125 @@
+#include<iostream.h>
+#include<conio.h>
+char grid[3][3]={{'1','2','3'},{'4','5','6'},{'7','8','9'}};
+int win[8][3]={{1,2,3},{4,5,6},{7,8,9},{1,5,9},{3,5,7},{1,4,7},{2,5,8},{3,6,9}};
+int turns=0,gameon=1;
+char counter='X';
+void input(char grid[][3]);
+void turn(int pos,char &counter,int &turns);
+void turnchange(char &counter);
+void result(char grid[][3]);
+void display(char grid[][3])
+{
+	cout<<" \t\t\t "<<grid[0][0]<<" | " <<grid[0][1]<<" | "<<grid[0][2]<<"\n";
+	cout<<" \t\t\t "<<grid[1][0]<<" | " <<grid[1][1]<<" | "<<grid[1][2]<<"\n";
+	cout<<" \t\t\t "<<grid[2][0]<<" | " <<grid[2][1]<<" | "<<grid[2][2]<<"\n";
+}
+
+void input(char grid[3][3])
+{
+	int pos;
+	while(gameon==1)
+	{
+		display(grid);
+		cout<<"Where do you want to play ? ";
+		cin>>pos;
+		turn(pos,counter,turns);
+	}
+
+}
+void turn(int pos,char &counter,int &turns)
+{
+	turns++;
+		if(pos==1 && grid[0][0]=='1')
+		{
+			grid[0][0]=counter;
+			turnchange(counter);
+		}
+		if(pos==2 && grid[0][1]=='2')
+		{
+			grid[0][1]=counter;
+			turnchange(counter);
+		}
+		if(pos==3 && grid[0][2]=='3')
+		{
+			grid[0][2]=counter;
+			turnchange(counter);
+		}
+		if(pos==4 && grid[1][0]=='4')
+		{
+			grid[1][0]=counter;
+			turnchange(counter);
+		}
+		if(pos==5 && grid[1][1]=='5')
+		{
+			grid[1][1]=counter;
+			turnchange(counter);
+		}
+		if(pos==6 && grid[1][2]=='6')
+		{
+			grid[1][2]=counter;
+			turnchange(counter);
+		}
+		if(pos==7 && grid[2][0]=='7')
+		{
+			grid[2][0]=counter;
+			turnchange(counter);
+		}
+		if(pos==8 && grid[2][1]=='8')
+		{
+			grid[2][1]=counter;
+			turnchange(counter);
+		}
+		if(pos==9 && grid[2][2]=='9')
+		{
+			grid[2][2]=counter;
+			turnchange(counter);
+		}
+		result(grid);
+}
+void turnchange(char &counter)
+{
+	if(counter=='X')
+	{
+		counter='O';
+	}
+	else if(counter=='O')
+	{
+		counter='X';
+	 //	o[pos-1]=pos;
+	 }
+}
+void result(char grid[3][3])
+{
+	int flag=1;
+	for(int i=0;i<8;i++)
+	{
+		int winspot[3];
+		for(int j=0;j<3;j++)
+		{
+			winspot[j]=win[i][j];
+		}
+		int r1=winspot[0]/3,c1=(winspot[0]%3)-1,r2=winspot[1]/3,c2=(winspot[1]%3)-1,r3=winspot[2]/3,c3=(winspot[2]%3)-1;
+		if(grid[r1][c1]==grid[r2][c2] && grid[r1][c1]==grid[r3][c3] && (grid[r1][c1]=='X' || grid[r1][c1]=='O'))
+		{
+			if(grid[r1][c1]=='X')
+				cout<<"player X has won";
+			else if(grid[r1][c1]=='O')
+				cout<<"player O has won ";
+			flag=0;
+			gameon=0;
+		}
+	}
+	if(turns==9 && flag==1)
+	{
+		cout<<" Its a draw ";
+		gameon=0;
+	}
+}
+void main()
+{
+	clrscr();
+	input(grid);
+	getch();
+}
+
